@@ -135,3 +135,47 @@ Django站点默认语言编码
 
 
 
+### 项目和应用
+
+一个项目被认为是一个安装了一些设置的Django。一个应用是一个包含模型（models），视图（views），模板（templates）以及URLs的组合，应用可以被各种各样的项目重复使用。可以简单理解为项目就是你的网站，这个网站包含了多个应用，例如Blog，wiki或者论坛，这些应用都可以被其他项目使用。
+
+
+
+### 创建一个应用
+
+假设创建一个blog应用，在项目主目录下运行：
+
+```
+python manage.py startapp blog
+```
+
+这个命令会创建blog应用的基本目录结构：
+
+```
+blog/
+    migrations/
+        __init__.py
+	__init__.py
+    admin.py
+    apps.py
+    models.py
+    tests.py
+    views.py
+```
+
+* admin.py：在这里注册你的模型并将它们包含到Django的管理页面中，可选
+* migrations：这个目录包含你的应用的数据库迁移，migrations允许Django跟踪你的模型变化并因此来同步数据库
+* models.py：应用的数据模型。所有Django应用都应该拥有一个models.py文件，可为空
+* tests.py：为应用创建测试
+* views.py：应用逻辑。每一个视图（view）都会接受一个http请求，处理该请求，并返回一个响应
+* apps.py：应用的设置和配置，包含一些初始化的设置。这个网站讲述了设置应该放置在项目里还是应用里面https://www.jb51.net/article/148849.htm
+
+
+
+### 设计数据架构 - models
+
+一个model就是一个python类，继承了django.db.models.model，其中的每一个属性表示一个数据库字段。Django将为models.py里面的每一个定义的model创建一张表。当创建好一个model，Django会提供一个实用的API来方便查询数据库。
+
+
+
+https://www.jianshu.com/p/05810d38f93a
