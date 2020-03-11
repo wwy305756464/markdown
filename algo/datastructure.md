@@ -1,3 +1,5 @@
+[TOC]
+
 
 
 # 数组 vs. 链表
@@ -113,3 +115,45 @@ int factorial(int x) {
 <img src="C:\Users\Wenyue Wang\AppData\Roaming\Typora\typora-user-images\image-20200302124659281.png" alt="image-20200302124659281" style="zoom:50%;" />
 
 使用栈虽然很方便，但储存的信息可能占用大量的内存，可能会导致溢出
+
+
+
+# Graph
+
+## 图的实现
+
+图由节点（node）和边（edge）组成。
+
+因为图中，每个节点都与临近节点相连，我们可以用hashmap来表示。Hash中key映射到value，图中是node映射到所有相邻node。
+
+``` pytho
+graph = []
+graph["you"] = ["Alice", "Ben", "Claire"]
+```
+
+这里键值对的添加顺序不重要，因为hash是无序的
+
+## 有向图 vs. 无向图
+
+有向图（directed graph）有单向关系的箭头，如果A指向B，那么B是A的邻居，而A不是B的邻居
+
+无向图（undirected graph）没有箭头，直接相连的节点互为邻居
+
+<img src="C:\Users\Wenyue Wang\AppData\Roaming\Typora\typora-user-images\image-20200310021132942.png" alt="image-20200310021132942" style="zoom:50%;" />
+
+以上两图的关系是等价的
+
+## 加权图 vs. 非加权图
+
+每条边有weight的图是weighted graph，反之为unweighted graph
+
+计算非加权图的最短路径可以用BFS，计算加权图的最短路径可以用Dijkstra‘s算法。考虑到环的出现只会增加路径的长度，所以Dijkstra's可用于有向无环图（directed acyclic graph）
+
+# Queue
+
+先进先出的数据结构，只支持两种操作：入队和出队。
+
+
+
+# Heap
+
