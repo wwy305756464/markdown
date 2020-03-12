@@ -1,14 +1,14 @@
 [TOC]
 
-![image-20200311105957101](C:\Users\Wenyue Wang\AppData\Roaming\Typora\typora-user-images\image-20200311105957101.png)
+![img](https://pic3.zhimg.com/80/v2-b92f60067804733195466a192e0b3603_1440w.jpg)
 
 
 
 [https://github.com/CyC2018/CS-Notes/blob/master/notes/%E7%AE%97%E6%B3%95%20-%20%E6%8E%92%E5%BA%8F.md](https://github.com/CyC2018/CS-Notes/blob/master/notes/算法 - 排序.md)
 
+https://zhuanlan.zhihu.com/p/57088609
 
-
-# Select Sort
+# Select Sort 选择排序
 
 ​		选择排序是最基础的排序方式，每次遍历一遍数组，找到符合的一个元素，将其加入新列表中，然后重复这个操作，直到将所有的元素排序到新列表中。时间复杂度为O(n^2)
 
@@ -18,23 +18,23 @@
 
 
 
-# Bubble Sort
+# Bubble Sort 冒泡排序
 
 
 
-# Insertion Sort
+# Insertion Sort 插入排序
 
 
 
-# Shell Sort
+# Shell Sort 希尔排序
 
 
 
-# Merge Sort
+# Merge Sort 归并排序
 
 
 
-# Quick Sort
+# Quick Sort 快速排序
 
 ## 步骤
 
@@ -64,7 +64,17 @@ print quicksort ([10, 5, 2, 6, 3, 9])
 
 
 
-# Heap Sort
+# Heap Sort 堆排序
+
+# Counting Sort 计数排序
+
+
+
+# Bucket Sort 桶排序
+
+# Radio Sort 基数排序
+
+
 
 
 
