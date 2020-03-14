@@ -67,6 +67,46 @@
 
 
 
+### Pattern
+
+#### sliding window
+
+#### two pointer
+
+#### fast and slow pointers
+
+#### merge interval
+
+#### cyclic sort 循环排序
+
+#### inplace reversal of a linked list 链表反转
+
+#### tree BFS
+
+#### tree DFS
+
+#### two heap
+
+#### subsets
+
+#### modified binary search
+
+#### top "k" elements
+
+#### k-way merge
+
+#### 0/1 knapsack (DP)
+
+#### topological sort (graph)
+
+
+
+
+
+
+
+
+
 ## Operating System
 
 ## 网络
