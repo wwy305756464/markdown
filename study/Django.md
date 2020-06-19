@@ -176,6 +176,6 @@ blog/
 
 一个model就是一个python类，继承了django.db.models.model，其中的每一个属性表示一个数据库字段。Django将为models.py里面的每一个定义的model创建一张表。当创建好一个model，Django会提供一个实用的API来方便查询数据库。
 
-
+%% 
 
 https://www.jianshu.com/p/05810d38f93a
