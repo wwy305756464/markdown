@@ -1,8 +1,80 @@
 # 	动态规划
 
-动态规划的工作原理是先解决子问题，再逐步解决大问题
+动态规划的工作原理是先解决子问题，再逐步解决大问题，核心是记住已经解决过的子问题的解
 
 在做题时，我们需要先想怎么将问题分解成最底层的小问题。
+
+## 动态规划算法的两种形式
+
+动态规划的求解一般有两种形式：自顶向下的备忘录法，和自底向上的方法。
+
+### 斐波那契数列例子
+
+$$
+Fibonacci(n)=0; 	\ \ \ \ n=0\\
+Fibonacci(n)=1; \ \ \ \  n=1\\
+Fibonacci(n)=Fibonacci(n-1)+Fibonacci(n-2); \ \ \ \ n=others
+$$
+
+#### 递归解法
+
+```c++
+int Fib(int n) {
+    if (n<=0) return 0;
+    if (n == 1) return 1;
+    return fib(n-1) + fib(n-2);
+}
+```
+
+递归解法的问题在于有些量我们重复计算了，而且重复计算了好多次：
+
+<img src="https://img-blog.csdn.net/20170715205029376?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzMwOTg3MA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" style="zoom: 50%;" />
+
+在递归的基础上，如果我们把已经计算过的量记录下来，就是自顶向下的动态规划算法。
+
+#### 自顶向下的备忘录法
+
+```c++
+int Fibonacci(int n) {
+    if(n<=0) return n;
+    vector<int> vec(n+1, -1); // 创建一个长度为n+1的数组，初赋值为-1.
+	return fib(n, vec);
+}
+
+int fib(int n, vector<int> vec){
+    if (vec[n] != -1) return vec[n];
+    if (n<=2) vec[n] = 1;
+    else vec[n] = fib(n-1, vec) + fib(n-2, vec);
+    return vec[n];
+}
+```
+
+#### 自底向上的动态规划
+
+自底向上的方法用了动态规划的核心，先计算子问题，再由子问题计算父问题
+
+```c++
+int fib(int n){
+    if (n<=0) return 0;
+    vector<int> vec(n+1);
+    vec[0] = 0;
+    vec[1] = 1;
+    for (int i=2; i<=n; ++i){
+        vec[i] = vec[i-1] + vec[i-2];
+    }
+    return vec[n];
+}
+```
+
+
+
+### 钢条切割
+
+![这里写图片描述](https://img-blog.csdn.net/20170715221117648?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzMwOTg3MA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+![这里写图片描述](https://img-blog.csdn.net/20170715222316773?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzMwOTg3MA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+
 
 ## 背包问题
 
