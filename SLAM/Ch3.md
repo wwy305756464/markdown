@@ -338,3 +338,64 @@ $$
 
 ### 四元数到其他旋转表示的转换
 
+我们先定义两个符号
+$$
+q^+=  \begin{bmatrix}
+  	s & -v^T \\ v & sI+v^\land
+  \end{bmatrix} \\
+q^\bigoplus=\begin{bmatrix}
+  	s & -v^T \\ v & sI-v^\land
+  \end{bmatrix}
+$$
+这两个符号可以将四元数映射成为一个 4*4 的矩阵，所以四元数的乘法可以写成矩阵的形式：
+$$
+q_1^+q_2=\begin{bmatrix}
+  	s_1 & -v_1^T \\ v_1 & s_1I+v_1^\land
+  \end{bmatrix} 
+  \begin{bmatrix}
+  	s_2 \\ v_2
+  	\end{bmatrix} = \begin{bmatrix}
+  	-v_1^Tv_2 + s_1s_2 \\ s_1v_2+s_2v_1+v_1^\land v_2
+  \end{bmatrix} = q_1q_2
+$$
+这样我们证明了：
+$$
+q_1q_2=q_1^+q_2=q_2^\bigoplus q_1
+$$
+经过一系列转换后我们可以得到四元数到旋转向量的转换公式：
+$$
+\begin{cases}
+\theta = 2arccos(q_0) \\
+[n_x, n_y, n_z]^T = [q_1, q_2, q_3]^T/sin(\frac{\theta}{2})
+\end{cases}
+$$
+
+
+## 相似、仿射、射影变换
+
+之前欧式变换保持了向量的长度和夹角，相当于将一个刚体原封不动地进行了移动或旋转，不改变它自身的样子。这里我们要讨论的集中变换则会改变它地外形
+
+#### 相似变换
+
+比欧式变换多了一个自由度，可以允许物体进行均匀缩放。这里缩放因子为 s，表示我们对向量旋转之后，可以在x, y, z三个坐标上进行均匀缩放。三维类似变换的集合叫做类似变换群，Sim(3)
+$$
+T_S=\begin{bmatrix} sR & T \\ 0^T & 1\end{bmatrix}
+$$
+
+#### 仿射变换
+
+仿射变换只需要A是一个可逆矩阵，而不必一定是正交矩阵。仿射变换也叫做正交投影。经过仿射变换之后，一个立方体就不再是方的了。但是它的各个面仍然是平行四边形
+$$
+T_A=\begin{bmatrix} A & t \\ 0^T & 1\end{bmatrix}
+$$
+
+#### 射影变换
+
+射影变换的左上角为可逆矩阵A，右上角为平移 t，左下角为缩放 a^T。这里当 v不为0，我们可以对整个矩阵除以v得到一个右下角为1的矩阵。如果v=0的话，得到的是右下角为0的矩阵。所以2D的射影变换有8个自由度，3D的有15个自由度，一般射影变换有近大远小的关系，即一个方形的东西不再是方形或者平行四边形
+$$
+T_P=\begin{bmatrix} A & T \\ 0^T & 1\end{bmatrix}
+$$
+
+#### 常见变换性质的比较
+
+<img src="C:\Users\Wenyue Wang\AppData\Roaming\Typora\typora-user-images\image-20200705113703933.png" alt="image-20200705113703933" style="zoom:67%;" />
