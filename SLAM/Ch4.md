@@ -155,5 +155,12 @@ $$
 $$
 
 
+
 ## 指数与对数映射
+
+![image-20200711142634248](C:\Users\Wenyue Wang\AppData\Roaming\Typora\typora-user-images\image-20200711142634248.png)
+
+
+
+## 李代数求导与扰动模型
 
