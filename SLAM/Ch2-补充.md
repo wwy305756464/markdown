@@ -20,7 +20,7 @@ project( HelloSLAM )
 add_executable( helloSLAM helloSLAM.cpp )
 ```
 step3: 新建文件夹 `build`，并在新文件夹中打开terminal
-step4: 使用cmake对该工程进行编译，在终端输入 `cmake .`，这时生成makefile和一系列其他的
+step4: 使用cmake对该工程进行编译，在终端输入 `cmake ..`，这时生成makefile和一系列其他的
 step5: 用make对其进行编译，在终端中输入 `make`
 step6: 运行该文件，在当前终端中输入 `./helloSLAM` 即可
 
@@ -40,7 +40,7 @@ void printHello(){
 这句话告诉了cmake，我们想把这个文件编译成一个叫做hello的库
 然后我们需要用cmake和make进行编译
 这里我们发现build文件夹中生成了一个叫做 `libhello.a` 的文件，这就是我们的库
- 
+
 在Linux中，库有静态库和共享库两种，静态库以 .a 作为后缀名，共享库以 .so 结尾。所有库都是一些函数打包后的集合，差别在于静态库每次被调用都会生成一个副本，而共享库则只有一个副本，更省空间。如果我们想要生成共享库，那么在CMakeLists中我们应该添加：
 `add_library( hello_shared SHARED libHelloSLAM.cpp )`
 ##### Step3: 添加头文件
