@@ -197,6 +197,10 @@ unsigned char pixel = image[y][x]; // 访问一个位于（x,y）处的元素
 * OpenCV库中是按照 B,G,R 的顺序存储的
 * 如果加上像素的透明度，就是有 R, G, B, A 四个通道
 
+### 图像坐标
+
+<img src="C:\Users\Wenyue Wang\AppData\Roaming\Typora\typora-user-images\image-20200719165917001.png" alt="image-20200719165917001" style="zoom: 50%;" />
+
 
 
 ## openCV 中的插值
@@ -234,7 +238,7 @@ f(x,y)=f(0,0)(1-x)(1-y)+f(1,0)x(1-y)+f(0,1)(1-x)y+f(1,1)xy \\
 f(x,y)=\begin{bmatrix}1-x && x
 \end{bmatrix} \begin{bmatrix}
 f(0,0) && f(0,1) \\ f(1,0) && f(1,1)
-\end{bmatrix} \begin{bmatrix} 1-y \\ y\end{bmatrix}
+\end{bmatrix} \begin{bmatrix} 1-y \\ y\end{bmatrix}
 $$
 双线性内插法的计算比最邻近点法复杂，计算量较大但没有灰度不连续的缺点，结果基本令人满意，它具有低通滤波性质，使高频分量受损，图像轮廓可能会有一点模糊
 
