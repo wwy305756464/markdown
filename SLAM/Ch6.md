@@ -93,3 +93,62 @@ $$
 (x,y)^*_{\text{MAP}}=\arg\max P(x,y|z,u)=\arg\max P(u,z|x,y)P(x,y)
 $$
 ​	即求解最大后验概率等价于最大化似然和先验的乘积。
+
+##### 求解最大似然估计（Maximize Likelihood Estimation，MLE）
+
+​	如果我们不知道机器人和路标大概在什么地方，即 $P(x,y)$ 未知，那么我们不用考虑先验，可以求解MLE：
+$$
+(x,y)^*_{\text{MLE}}=\arg\max P(z,u|x,y)
+$$
+​	似然（Likelihood）指在现在的位姿下，可能产生怎样的观测数据。在这里我们已知的是观测数据，那么最大似然估计可以理解为：“在什么样的状态下，最可能产生现在观测到的数据。“
+
+
+
+### 最小二乘
+
+#### 观测模型和观测数据的条件概率：
+
+对于某一次观测：
+$$
+z_{k,j}=h(y_j,x_k)+v_{k,j}
+$$
+加入噪声项之后，观测数据的条件概率为：
+$$
+P(z_{j,k}|x_k,y_j)=\mathcal N(h(y_j,x_k),Q_{k,j}
+$$
+这里我们用最小化负对数来求一个高斯分布的最大似然。
+
+代入SLAM的观测模型，并且经过相关推导之后我们可以得到：
+$$
+(x_k,y_j)^*=\arg\max \mathcal N(h(y_j,x_k),Q_{k,j})\\=\arg\min ((z_{k,j}-h(x_k,y_j))^TQ_{k,j}^{-1}(z_{k,j}-h(x_k,y)))
+$$
+上面公式是针对某一个时刻的观测模型，现在我们考虑批量时刻的数据，假设各个时刻的输入和观测是相对独立的，那么各个输入见是独立的，各个观测间也是独立的。所以我们可以得到：
+$$
+P(z,u|x,y)=\prod_kP(u_k|x_{k-1},x_k)\prod_{k,j}P(z_{k,j}|x_k,y_j)
+$$
+这说明了我们可以独立处理各时刻的运动和观测。
+
+##### 误差
+
+我们定义各次输入和观测数据与模型之间的误差：
+$$
+e_{u,k}=x_k-f(x_{k-1},u_k) \\
+e_{z,j,k}=z_{k,j}-h(x_k,y_j)
+$$
+将各个时刻的误差累积起来就得到了一个最小二乘问题：
+$$
+\min J(x,y)=\sum_k e_{u,k}^TR_k^{-1}e_{u,k}+\sum_k\sum_ke^{-1}_{z,k,j}Q^{-1}_{k,j}e_{z,k,j}
+$$
+我们需要解决的就是如何求解这个最小二乘问题
+
+
+
+### 例子：批量状态估计
+
+考虑有一辆汽车在沿 x 轴方向前进或后退地运动，那么运动和观测方程为：
+$$
+运动：\space x_k=x_{k-1}+u_k+w_k, \space\space\space\space w_k\sim\mathcal{N}(0,Q_k)\\
+观测：\space z_k=x_k+n_k,\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space n_k\sim\mathcal{N}(0,R_k)
+$$
+这里每一项代表：
+
