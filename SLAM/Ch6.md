@@ -152,3 +152,32 @@ $$
 $$
 这里每一项代表：
 
+* $x_k$：k 时刻汽车的位置
+* $x_{k-1}$：k-1 时刻汽车的位置
+* $u_k$：k 时刻传感器读出的与上个时刻之间的差值
+* $w_k$：运动中的噪声（误差）
+* $z_k$：汽车位置的测量值
+* $n_k$：观测中的噪声
+
+这里假设汽车经过了三个时刻，k=1,2,3，而且初始状态 $x_0$ 已知：
+$$
+x=\begin{bmatrix} x_0 \\ x_1 \\ x_2 \\ x_3\end{bmatrix}, \quad z=\begin{bmatrix}z_1\\z_2\\z_3\end{bmatrix},\quad u=\begin{bmatrix}u_1\\u_2\\u_3\end{bmatrix}
+$$
+根据之前的推导我们知道最大似然估计为：
+$$
+x^*_{\text map}=\arg\max P(x|u,z)=\arg\max P(u,z|x)=\prod_{k=1}^3P(u_k|x_{k-1},x_k)\prod_{k=1}^3P(z_k|x_k)
+$$
+我们从运动方程和观测方程已知：
+$$
+P(z_k|x_k)=\mathcal N(x_k, R_k) \\
+P(u_k|x_{k-1},x_k)=\mathcal N(x_k-x_{k-1},Q_k)
+$$
+同样，我们构建误差变量：
+$$
+e_{u,k}=x_k-x_{k-1}-u_k \\
+e_{z,k}=z_k-x_k
+$$
+整理得知，最小二乘的目标函数为：
+$$
+\min \sum_{k=1}^3 e_{u,k}^T Q_k^{-1} + \sum_{k=1}^3 e_{z,k}^T R_{k}^{-1} e_{z,k}
+$$
