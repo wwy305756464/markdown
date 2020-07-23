@@ -228,7 +228,7 @@ $$
 
 ### 一阶和二阶梯度法
 
-假设在第 $k$ 次迭代，我们在 $x_k$ 处，想要寻找增量 $\Delta x_k$。我们将目标函数在 $x_k$ 附近做泰勒展开：
+假设在第 $k$ 次迭代，我们在 $x_k$ 处，想要寻找增量 $\Delta x_k$。我们将目标函数 **$F(x)$** 在 $x_k$ 附近做泰勒展开：
 $$
 F(x_k+\Delta x_k)\approx F(x_k)+J(x_k)^T\Delta x_k + \frac{1}{2}\Delta x_k^T H(x_k)\Delta x_k
 $$
@@ -261,3 +261,15 @@ $$
 
 ### 高斯牛顿法
 
+将 $f(x)$ 在 $x_k$ 附近进行一阶的泰勒展开：
+$$
+f(x+\Delta x)\approx f(x)+J(x)^T\Delta x
+$$
+这里的 $J(x)^T$ 是 $f(x)$ 关于 $x$ 的导数，是 n*1 的列向量。这里为了求增量 $\Delta x$ 使 $||f(x+\Delta x)||^2$ 最小。这里我们将其转换为一个解线性的最小二乘问题：
+$$
+\Delta x^* = \arg \min_{\Delta x} \frac{1}{2}||f(x)+J(x)^T \Delta x ||^2
+$$
+用相同的方法来解这个方程，我们可以得到：
+$$
+\frac{1}{2}||f(x)+J(x)^T\Delta x||^2=\frac{1}{2}(f(x)+J(x)^T\Delta x)^T(f(x)+J(x)^T\Delta x)\\=\frac{1}{2}(||f(x)||^2_2+2f(x)J(x)^T\Delta x+\Delta x^TJ(x)J(x)^T\Delta x)
+$$
