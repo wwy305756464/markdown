@@ -53,3 +53,35 @@ e.g. 黄(500-700)=白(400-700)-蓝(400-500)=红(600-700)+绿(500-600)
 
 ## Color matching
 
+被匹配的颜色和要匹配的颜色并排放置，不断在三原色上面做加法/减法直至两者相同
+
+
+
+## Color space
+
+### RGB
+
+* single wavelength primaries
+* good for devices, but not for perception
+
+### CIE XYZ color space
+
+* here, Y value approximates brightness, Z is quasi-equal to blue, X is a mix of response curves chosen to be nonnegative
+
+* usually projected to display:
+  $$
+  (x,y)=(X/(X+Y+Z),Y/(X+Y+Z))
+  $$
+
+### Uniform color space (Lab)
+
+* due to the limitation of CIE XYZ color space, which is not a uniform color space, so magnitude of differences in coordinates are poor indicator of color "distance".
+* thus, attempt to correct the limitation by remapping color space so that just-noticeable differences are contained by circles -> distances more perceptually meaningful
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh3rb24srfj31cu0ikq5p.jpg" style="zoom:40%;" />
+
+### HSV color space 
+
+* H,S,V -> Hue, Saturation, Value
+* it is nonlinear representation, that reflects topology of colors by coding hue as an angle
+
