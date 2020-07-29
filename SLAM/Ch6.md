@@ -120,7 +120,7 @@ $$
 
 代入SLAM的观测模型，并且经过相关推导之后我们可以得到：
 $$
-(x_k,y_j)^*=\arg\max \mathcal N(h(y_j,x_k),Q_{k,j})\\=\arg\min ((z_{k,j}-h(x_k,y_j))^TQ_{k,j}^{-1}(z_{k,j}-h(x_k,y)))
+(x_k,y_j)^*=\arg\max \mathcal N(h(y_j,x_k),Q_{k,j})\\=\arg\min \left ((z_{k,j}-h(x_k,y_j))^TQ_{k,j}^{-1}(z_{k,j}-h(x_k,y)) \right)
 $$
 上面公式是针对某一个时刻的观测模型，现在我们考虑批量时刻的数据，假设各个时刻的输入和观测是相对独立的，那么各个输入见是独立的，各个观测间也是独立的。所以我们可以得到：
 $$
@@ -271,5 +271,63 @@ $$
 $$
 用相同的方法来解这个方程，我们可以得到：
 $$
-\frac{1}{2}||f(x)+J(x)^T\Delta x||^2=\frac{1}{2}(f(x)+J(x)^T\Delta x)^T(f(x)+J(x)^T\Delta x)\\=\frac{1}{2}(||f(x)||^2_2+2f(x)J(x)^T\Delta x+\Delta x^TJ(x)J(x)^T\Delta x)
+\frac{1}{2}||f(x)+J(x)^T\Delta x||^2=\frac{1}{2}(  f(x)+J(x)^T\Delta x)^T(f(x)+J(x)^T\Delta x )\\=\frac{1}{2}\left(||f(x)||^2_2+2f(x)J(x)^T\Delta x+\Delta x^TJ(x)J(x)^T\Delta x \right)
 $$
+
+这里求关于 $\Delta x$ 的导数然后令其为零，可以得到：
+$$
+J(x)f(x)+J(x)J^T(x)\Delta x=0
+$$
+将这个公式简单整理一下我们可以得到：
+$$
+\underbrace{J(x)J^T(x)}_{H(x)}\Delta x = \underbrace{-J(x)f(x)}_{g(x)}\space\space\space\space \to \space\space\space\space H\Delta x=g
+$$
+这里我们发现，在整理之后，可以得到一个关于 $\Delta x$ 的线性方程，称其为增量方程或者高斯牛顿方程（Gauss-Newton equation）或者正规方程（Normal equation）。
+
+跟牛顿法对比我们得知，这里不用计算方程 $H$ ，而是用 $JJ^T$ 来代替。
+
+#### 步骤：
+
+1. 给定初始值 $x_0$
+2. 对于第 k 次迭代，求出当前的雅可比矩阵 $J(x_k)$ 和误差 $f(x_k)$
+3. 求解增量方程：$H\Delta x_k=g$
+4. 如果 $\Delta x_k$ 足够小，则停止。否则，令 $x_{k+1}=x_k+\Delta x_k$，返回第二步
+
+这里的重点在于求解增量方程。但存在这样的问题，如果要求解增量方程，$H$ 矩阵必须是可逆的，而实际数据中的 $JJ^T$ 却只有半正定性。
+
+
+
+## 列文伯格 - 马夸尔特方法
+
+高斯牛顿法中采用的近似二阶泰勒展开只能在展开点附近有良好的近似效果，所以我们很自然地想到应该给 $\Delta x$ 添加一个范围，称为信赖区域（trust region）。这个范围定义了在什么情况下二阶近似是有效的，所以这个方法也被称为信赖区域方法（trust region method）。那么我们认为近似在信赖区域内是有效的。
+
+#### 如何寻找信赖区域？
+
+根据近似模型跟实际函数之间的差异来确定。如果差异小，说明近似效果好，就扩大近似的范围，反之就缩小近似的范围。这里用 $\rho$ 来刻画近似的好坏程度:
+$$
+\rho=\frac{f(x+\Delta x)-f(x)}{J(x)^T\Delta x}
+$$
+这里分子是实际函数下降的值，分母是近似模型下降的值：
+
+* $\rho$ 接近于1，近似是好的
+* $\rho$ 太小，实际减小的值远少于近似减小的值，所以近似比较差，需要缩小近似范围
+* $\rho$ 太大，实际下降的比预计的更大，可以放大近似范围
+
+#### 步骤
+
+1. 给定初始值 $x_0$ 以及初始优化半径 $\mu$
+
+2. 对于第 k 次迭代，在牛顿高斯法的基础上加上信赖区域，求解：
+   $$
+   \min_{\Delta x_k}\frac{1}{2}\left\| f(x_k) + J(x_k)^T \Delta x_k \right\|^2, \space\space\space\space \text{s.t.} \space\space\space\space \|D\Delta x_k\|^2 \leqslant \mu
+   $$
+   ​	这里 $\mu$ 是信赖区域的半径，D 是系数矩阵
+
+3. 计算 $\rho$: $\rho=\frac{f(x+\Delta x)-f(x)}{J(x)^T\Delta x}$
+
+4. 如果 $\rho>\frac{3}{4}$，则设置$\mu=2\mu$ ；如果 $\rho<\frac{1}{4}$，则设置$\mu=0.5\mu$
+
+5. 如果 $\rho$ 大于某阈值，则认为近似可行，令 $x_{k+1}=x_k+\Delta x_k$
+
+6. 判断算法是否收敛。如果不收敛则返回第二步，否则结束
+
