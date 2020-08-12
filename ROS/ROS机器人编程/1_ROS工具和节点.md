@@ -36,7 +36,29 @@ catkin_create_pkg my_minimal_nodes roscpp std_msgs
 
 
 
-## 编写 publisher
+## 编写 Publisher
+
+
+
+## 编写 Subscriber
+
+
+
+## 编译、运行节点
+
+
+
+## 节点时间规划
+
+
+
+## 其他ROS工具
+
+
+
+## 一个节点同时充当 Publisher 和 Subscriber
+
+
 
 
 
